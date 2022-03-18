@@ -1,6 +1,6 @@
 package linkedlist;
 
-public interface List {
+public interface List extends Iterable{
     int size();
 
     boolean isEmpty();

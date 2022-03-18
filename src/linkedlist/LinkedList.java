@@ -1,39 +1,42 @@
 package linkedlist;
 
-import org.w3c.dom.traversal.NodeIterator;
-
 import java.util.Iterator;
 
-public class LinkedList implements List, Iterable {
+public class LinkedList implements List {
     int size;
     Node head;
 
     public LinkedList() {
-        this.head = new Node(0);
+
 
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<Integer> iterator() {
+
         return new NodeIterator();
     }
 
-    public class NodeIterator implements Iterator<Node> {
+    public class NodeIterator implements Iterator<Integer> {
+        Node current = head;
         private int index;
 
         @Override
         public boolean hasNext() {
+
             return index < size;
         }
 
         @Override
-        public Node next() {
-            Node current = head;
-            for (int i = 0; i < index; i++) {
-                current = current.next;
-            }
-            return current.next;
+        public Integer next() {
+
+            int ret;
+            ret = current.val;
+            current = current.next;
+            index++;
+            return ret;
         }
+
     }
 
     private class Node {
@@ -49,6 +52,12 @@ public class LinkedList implements List, Iterable {
 
         public Node(int value) {
             this.val = value;
+        }
+
+        @Override
+        public String toString() {
+            return val +
+                    "-->" + next;
         }
     }
 
@@ -95,7 +104,7 @@ public class LinkedList implements List, Iterable {
         Node temp = new Node(value);
         Node current = head;
 
-        for (int i = 0; current != null && i < index; i++) {
+        for (int i = 0; current != null && i < index - 1; i++) {
             current = current.next;
         }
 
@@ -110,7 +119,7 @@ public class LinkedList implements List, Iterable {
     @Override
     public void delete(int index) {
         if (index < 0 || index >= size) throw new IndexOutOfBoundsException("Invalid index");
-        Node first= head;
+        Node first = head;
         Node x = first;
         if (index == 0) {
             first = first.next;
@@ -126,31 +135,43 @@ public class LinkedList implements List, Iterable {
 
     @Override
     public String toString() {
-        String s="";
+        Node n = head;
 
-        for(int i=1;i<=size;i++){
-            s=s+getIndex(i)+"-->";
+        String s = "";
+
+        for (int i = 0; i < size; i++) {
+            s = s + "-->" + getIndex(i);
         }
-        return s+"null";
+        return s + "-->null";
+
     }
 
     public static void main(String[] args) {
         LinkedList l = new LinkedList();
         // l.add(0,12);
-        l.add(0, 14);
-        l.add(1, 14);
-        l.add(2, 25);
-        l.add(3,45);
-        l.add(4,63);
+        l.add(45);
+        l.add(48);
+        l.add(41);
+        l.add(40);
+        l.add(12);
+        l.add(54);
+        l.add(78);
+        // l.delete(4);
+        //System.out.println(l);
         //System.out.println(l.getIndex(1));
-      //  System.out.println(l.add(2, 15));
-       // System.out.println(l.size());
-       // System.out.println(l.isEmpty());
-       // l.delete(1);
-       // System.out.println(l.size());
-       // System.out.println(l.getIndex(2));
+        //  System.out.println(l.add(2, 15));
+        // System.out.println(l.size());
+        // System.out.println(l.isEmpty());
+        // l.delete(1);
+        // System.out.println(l.size());
+        // System.out.println(l.getIndex(2));
         System.out.println(l.toString());
 
-
+        Iterator<Integer> it = l.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
     }
+
 }
+
